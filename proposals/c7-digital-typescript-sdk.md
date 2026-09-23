@@ -4,6 +4,7 @@ Status: Ready
 Created: 2026-04-22
 Label: canton-apis, daml-tooling
 Champion: hrischuk-da
+RFP: "#17 — SDKs in different languages (standard)"
 ---
 
 # Development Fund Proposal: @c7-digital TypeScript SDK for Canton JSON API v2
@@ -11,6 +12,21 @@ Champion: hrischuk-da
 ## Abstract
 
 C7 requests Development Fund support for the ongoing maintenance and development of three open-source TypeScript libraries — `@c7-digital/ledger`, `@c7-digital/react`, and `@c7-digital/scribe` — that enable TypeScript/JavaScript developers to build applications against the Canton JSON Ledger API v2. These libraries fill a critical ecosystem gap: Digital Asset's `@daml/ledger` and `@daml/react` packages are no longer supported and incompatible with Canton 3.x. C7 has already built and published working replacements targeting Canton 3.4.9. This grant funds continued maintenance, feature development, and community adoption work across a 12-month period.
+
+---
+
+## RFP Mapping
+
+This proposal responds to **RFP #17 — "SDKs in different languages (standard)"** (Developer Experience, Tooling & Education) — the TypeScript equivalent of the funded Rust SDK grant ([PR #407](https://github.com/canton-foundation/canton-dev-fund/pull/407)). Per that RFP, the four items each SDK proposal must identify:
+
+| RFP #17 requirement | This proposal |
+| --- | --- |
+| Target language | TypeScript / JavaScript |
+| Intended developer audience | Web and fintech dApp developers on Canton (browser and Node.js) |
+| APIs / workflows covered | Canton JSON Ledger API v2 — query, create, exercise, WebSocket streaming, user management |
+| How compatibility is maintained | The version-tracking SLA in Milestone 2 (patch/minor ≤ 4 weeks, major ≤ 8 weeks) plus a public compatibility matrix |
+
+The ecosystem gap this fills and its adoption impact are detailed under [Motivation](#motivation); adoption is gated per milestone on verifiable external use.
 
 ---
 
@@ -48,6 +64,12 @@ This work falls within the Development Fund's mandate under CIP-0082 and CIP-010
 ### 4. Backward Compatibility
 
 No backward compatibility impact on the Canton protocol or existing node deployments. These are purely additive application-layer libraries. Migration from `@daml/ledger` / `@daml/react` requires updating method call signatures to match the v2 API (principally adding `actAs` parameters); a migration guide will be published as part of Milestone 1.
+
+### 5. Ledger Client Standard Alignment
+
+RFP #17 asks SDK proposals to follow the Canton ledger client standard (the common-interface standard the Foundation is moving into the docs). `@c7-digital/ledger` already exposes the core client surface (`query`, `create`, `exercise`, streaming, user management) over the JSON Ledger API v2. As a Milestone 1 deliverable, C7 will map it to the ledger client standard's common interface, publish the mapping, and track any deltas as issues.
+
+`@c7-digital/scribe` (the codegen build tool) is scoped under this SDK proposal as the pipeline that feeds the client, not split out. Should the Foundation prefer DPM-native codegen, `scribe` is a natural future DPM component (RFP #19) — noted as a direction, not part of this grant.
 
 ---
 
